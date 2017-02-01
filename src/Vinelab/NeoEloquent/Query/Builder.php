@@ -312,7 +312,7 @@ class Builder extends IlluminateQueryBuilder {
 		$type = 'Basic';
 
         $property = $column;
-
+/*
         // When the column is an id we need to treat it as a graph db id and transform it
         // into the form of id(n) and the typecast the value into int.
         if ($column == 'id')
@@ -330,7 +330,7 @@ class Builder extends IlluminateQueryBuilder {
         }
         // Also if the $column is already a form of id(n) we'd have to type-cast the value into int.
         elseif (preg_match('/^id\(.*\)$/', $column)) $value = intval($value);
-
+*/
         $binding = $this->prepareBindingColumn($column);
 
         $this->wheres[] = compact('type', 'binding', 'column', 'operator', 'value', 'boolean');
@@ -395,7 +395,7 @@ class Builder extends IlluminateQueryBuilder {
 
         $property = $column;
 
-        if ($column == 'id') $column = 'id('. $this->modelAsNode() .')';
+        //if ($column == 'id') $column = 'id('. $this->modelAsNode() .')';
 
         $this->wheres[] = compact('type', 'column', 'values', 'boolean');
 
@@ -421,7 +421,7 @@ class Builder extends IlluminateQueryBuilder {
 
         $property = $column;
 
-        if ($column == 'id') $column = 'id('. $this->modelAsNode() .')';
+        //if ($column == 'id') $column = 'id('. $this->modelAsNode() .')';
 
         $this->wheres[] = compact('column', 'type', 'boolean', 'not');
 
