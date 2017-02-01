@@ -352,7 +352,7 @@ class Builder extends IlluminateBuilder {
             // WARNING: Do this after setting all the attributes to avoid overriding it
             // with a null value or colliding it with something else, some Daenerys dragons maybe ?!
             // DJ: only do this if there isn't already an ID in the results.
-            if ( ! is_null($columns) && && in_array('id', $columns) && !array_key_exists("id", $attributes))
+            if ( ! is_null($columns) && in_array('id', $columns) && !array_key_exists("id", $attributes))
             {
                 $attributes['id'] = $row['id(' . $this->query->modelAsNode() . ')'];
             }
