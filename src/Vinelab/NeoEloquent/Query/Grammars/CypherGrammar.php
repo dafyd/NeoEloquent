@@ -152,7 +152,7 @@ class CypherGrammar extends Grammar {
 
         // We treat node ids differently here in Cypher
         // so we will have to turn it into something like id(node)
-        $property = $property == 'id' ? 'id('. $parent['node'] .')' : $parent['node'] .'.'. $property;
+        $property = $parent['node'] .'.'. $property;
 
         return '('. $parent['node'] . $parentLabels .'), '
                 . $this->craftRelation($parent['node'], $relationshipLabel, $related['node'], $relatedLabels, $direction);
@@ -178,7 +178,7 @@ class CypherGrammar extends Grammar {
 
         // We treat node ids differently here in Cypher
         // so we will have to turn it into something like id(node)
-        $property = $property == 'id' ? 'id('. $parent['node'] .')' : $parent['node'] .'.'. $property;
+        $property = $parent['node'] .'.'. $property;
 
         return '('. $parent['node'] . $parentLabels .'), '
                 . $this->craftRelation($parent['node'], 'r', $relatedNode, '', $direction);
