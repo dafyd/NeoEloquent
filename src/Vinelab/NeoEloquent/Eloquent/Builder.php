@@ -44,12 +44,7 @@ class Builder extends IlluminateBuilder {
             return $this->findMany(array_map(function($id){return is_numeric($id) ? (int) $id : $id;},$id), $properties);
         }
 
-        if ($this->model->getKeyName() === 'id') {
-            // ids are treated differently in neo4j so we have to adapt the query to them.
-            $this->query->where($this->model->getKeyName() . '('. $this->query->modelAsNode() .')', '=', $id);
-        } else {
-            $this->query->where($this->model->getKeyName(), '=', $id);
-        }
+        $this->query->where($this->model->getKeyName(), '=', $id);
 
         return $this->first($properties);
     }
@@ -344,18 +339,6 @@ class Builder extends IlluminateBuilder {
 
                 $attributes[$property] = $value;
             }
-
-            // If the node id is in the columns we need to treat it differently
-            // since Neo4j's convenience with node ids will be retrieved as id(n)
-            // instead of n.id.
-
-            // WARNING: Do this after setting all the attributes to avoid overriding it
-            // with a null value or colliding it with something else, some Daenerys dragons maybe ?!
-            if ( ! is_null($columns) && in_array('id', $columns))
-            {
-                $attributes['id'] = $row['id(' . $this->query->modelAsNode() . ')'];
-            }
-
         } elseif ($result instanceof Node)
         {
             $attributes = $this->getNodeAttributes($result);
@@ -377,11 +360,6 @@ class Builder extends IlluminateBuilder {
     {
         // Extract the properties of the node
         $attributes = $node->getProperties();
-
-        // Add the node id to the attributes since \Everyman\Neo4j\Node
-        // does not consider it to be a property, it is treated differently
-        // and available through the getId() method.
-        $attributes['id'] = $node->getId();
 
         return $attributes;
     }
