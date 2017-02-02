@@ -195,7 +195,6 @@ class Builder extends IlluminateQueryBuilder {
                 }
             }
         }
-
         return $bindings;
     }
 
@@ -341,7 +340,7 @@ class Builder extends IlluminateQueryBuilder {
         {
 			$this->addBinding([$property => $value], 'where');
 		}
-
+		
 		return $this;
 	}
 
@@ -728,8 +727,7 @@ class Builder extends IlluminateQueryBuilder {
      */
     public function first($columns = array('*'))
     {
-        $results = $this->take(1)->get($columns)->current();
-
+	    $results = $this->take(1)->get($columns)->current();
         return (isset($results[0]) && count($results[0]) > 0) ? $results[0]->getProperties() : null;
     }
 
@@ -908,7 +906,7 @@ class Builder extends IlluminateQueryBuilder {
         if (is_null($original)) {
             $this->columns = $columns;
         }
-
+        
         $results = $this->processor->processSelect($this, $this->runSelect());
 
         $this->columns = $original;

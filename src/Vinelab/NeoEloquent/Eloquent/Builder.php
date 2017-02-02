@@ -50,7 +50,6 @@ class Builder extends IlluminateBuilder {
     //    } else {
             $this->query->where($this->model->getKeyName(), '=', $id);
     //    }
-
         return $this->first($properties);
     }
 
